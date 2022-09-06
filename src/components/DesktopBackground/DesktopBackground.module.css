@@ -3,4 +3,15 @@
   height: 100vh;
   background: url('/src/assets/images/Default_Background.png') center center no-repeat;
   background-size: cover;
+  position: relative;
+}
+
+.blurred {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(94.68deg, rgba(255, 255, 255, 0.1) -6.16%, rgba(255, 255, 255, 0.1) 108.66%);
+  backdrop-filter: blur(15px);
 }
