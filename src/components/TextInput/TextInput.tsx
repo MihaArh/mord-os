@@ -1,17 +1,37 @@
-import USER_ICON from 'assets/icons/user.svg';
 import FlexDiv from 'components/FlexDiv';
 import React from 'react';
 
 import styles from './TextInput.module.css';
 
-function TextInput() {
+interface TextInputProps {
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  placeholder?: string;
+  errorMessage?: string;
+  hideText?: boolean;
+}
+function TextInput({ leftIcon, rightIcon, placeholder, errorMessage, hideText = false }: TextInputProps) {
+  const inputType = hideText ? 'password' : 'text';
   return (
     <FlexDiv className={styles.container}>
-      <img src={USER_ICON} alt="User icon" width={24} height={24} className={styles.leftIcon} />
-      <div className={styles.divider} />
-      <input type="text" className={styles.input} />
+      {leftIcon && (
+        <>
+          <div className={styles.leftIcon}>{leftIcon}</div>
+          <div className={styles.divider} />
+        </>
+      )}
+      <div className={styles.inputDiv}>
+        <input type={inputType} name="email" className={styles.input} placeholder={placeholder} />
+        {errorMessage && <span>{errorMessage}</span>}
+      </div>
+      {rightIcon && (
+        <>
+          <div className={styles.rightIcon}>{rightIcon}</div>
+          <div className={styles.divider} />
+        </>
+      )}
     </FlexDiv>
   );
 }
 
-export default TextInput;
+export default React.memo(TextInput);
