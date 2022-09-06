@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import style from './FlexDiv.module.css';
+import styles from './FlexDiv.module.css';
 
 interface FlexDivProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -9,7 +9,7 @@ interface FlexDivProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 function FlexDiv({ children, className, ...restProps }: FlexDivProps) {
   return (
-    <div className={classNames(style.container, className)} {...restProps}>
+    <div className={classNames(styles.container, className)} {...restProps}>
       {children}
     </div>
   );
