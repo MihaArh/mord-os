@@ -1,0 +1,6 @@
+.background {
+  width: 100vw;
+  height: 100vh;
+  background: url('/src/assets/images/Default_Background.png') center center no-repeat;
+  background-size: cover;
+}
