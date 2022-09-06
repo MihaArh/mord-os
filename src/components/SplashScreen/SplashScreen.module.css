@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  height: fit-content;
+  width: fit-content;
+  object-fit: cover;
+}
+
+.appear {
+  animation: appearAnimation 2s ease-in;
+}
+
+@keyframes appearAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
