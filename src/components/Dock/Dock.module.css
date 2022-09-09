@@ -23,6 +23,12 @@
 .tooltip {
   font-size: 0.8rem;
 }
+.activeApp {
+  height: 4px;
+  width: 36px;
+  border-radius: 16px;
+  background-color: var(--dark-gray);
+}
 
 @media only screen and (min-width: 768px) {
   .iconsContainer {

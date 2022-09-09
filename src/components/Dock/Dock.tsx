@@ -74,6 +74,7 @@ function Dock() {
           className={styles.icon}
           data-text={app.tooltip}
         />
+        <div className={styles.activeApp} />
       </FlexDiv>
     ));
   }
