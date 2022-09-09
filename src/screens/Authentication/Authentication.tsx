@@ -62,39 +62,41 @@ function Authentication() {
   return (
     <DesktopBackground blurred>
       <FlexDiv className={styles.container}>
-        <FlexDiv className={styles.avatarContainer}>
-          <img src={Images.AVATAR} alt="Avatar" className={styles.avatarImage} />
+        <FlexDiv className={styles.loginForm}>
+          <FlexDiv className={styles.avatarContainer}>
+            <img src={Images.AVATAR} alt="Avatar" className={styles.avatarImage} />
+          </FlexDiv>
+          <TextInput
+            onValueChange={onEmailChangeHandler}
+            onBlur={validateEmail}
+            errorMessage={emailErrorMessage}
+            required
+            leftIcon={<Icon size="small" src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
+            placeholder="Email"
+          />
+          <TextInput
+            required
+            onValueChange={onPasswordChangeHandler}
+            onBlur={validatePassword}
+            errorMessage={passwordErrorMessage}
+            leftIcon={<Icon size="small" src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
+            rightIcon={
+              <Icon
+                size="small"
+                src={hidePassword ? Icons.EYE : Icons.EYE_DISABLE}
+                onClick={onPasswordVisibilityClick}
+                alt="Hide Password"
+                className={styles.leftIcon}
+              />
+            }
+            placeholder="Password"
+            hideText={hidePassword}
+          />
+          <FlexDiv className={styles.credentialsError}>{credentialsErrorMessage}</FlexDiv>
+          <div className={styles.circle}>
+            <Icon size="large" src={Icons.ARROW_RIGHT} alt="Right Arrow" onClick={onLoginIconClick} />
+          </div>
         </FlexDiv>
-        <TextInput
-          onValueChange={onEmailChangeHandler}
-          onBlur={validateEmail}
-          errorMessage={emailErrorMessage}
-          required
-          leftIcon={<Icon size="small" src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
-          placeholder="Email"
-        />
-        <TextInput
-          required
-          onValueChange={onPasswordChangeHandler}
-          onBlur={validatePassword}
-          errorMessage={passwordErrorMessage}
-          leftIcon={<Icon size="small" src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
-          rightIcon={
-            <Icon
-              size="small"
-              src={hidePassword ? Icons.EYE : Icons.EYE_DISABLE}
-              onClick={onPasswordVisibilityClick}
-              alt="Hide Password"
-              className={styles.leftIcon}
-            />
-          }
-          placeholder="Password"
-          hideText={hidePassword}
-        />
-        <div className={styles.credentialsError}>{credentialsErrorMessage}</div>
-        <div className={styles.circle}>
-          <Icon size="large" src={Icons.ARROW_RIGHT} alt="Right Arrow" onClick={onLoginIconClick} />
-        </div>
       </FlexDiv>
     </DesktopBackground>
   );

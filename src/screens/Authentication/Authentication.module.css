@@ -1,6 +1,12 @@
 .container {
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  height: 100vh;
+}
+.loginForm {
+  align-items: center;
+  justify-content: space-around;
+  height: 50vh;
 }
 .avatarContainer {
   background-color: var(--light-gray);
@@ -24,4 +30,6 @@
 }
 .credentialsError {
   color: var(--error-color);
+}
+.loginSuccessful {
 }
