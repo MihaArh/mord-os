@@ -7,7 +7,7 @@ import styles from './MenuBar.module.css';
 
 function MenuBar() {
   const [date, setDate] = useState(new Date());
-  const formattedTime = `${date.getHours()}:${date.getMinutes()}`;
+  const formattedTime = date.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
   const localizedDate = date.toLocaleString('dafault', { weekday: 'short', month: 'short', day: 'numeric' });
 
   useEffect(() => {
