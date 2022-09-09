@@ -1,7 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
+import directoryReducer from './directorySlice';
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    directory: directoryReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

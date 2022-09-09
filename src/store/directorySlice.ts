@@ -2,40 +2,49 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from './configureStore';
 
-interface File {
+export interface File {
   name: string;
   createdAt: number;
   updatedAt: number;
+  content: string;
+  kind: 'file';
 }
-// Define a type for the slice state
-interface DirectoryState {
+export interface DirectoryState {
   folderName: string;
-  created: number;
-  lastChange: number;
-  subFolders: DirectoryState[] | null;
-  files: File[] | null;
+  createdAt: number;
+  updatedAt: number;
+  subFolders: DirectoryState[];
+  files?: File[];
+  kind: 'folder';
 }
 
-// Define the initial state using that type
 const initialState: DirectoryState = {
   folderName: 'MordOs',
-  created: 0,
-  lastChange: 0,
+  createdAt: 0,
+  updatedAt: 0,
+  kind: 'folder',
   subFolders: [
     {
       folderName: 'Files',
-      created: 0,
-      lastChange: 0,
-      subFolders: null,
-      files: [],
+      createdAt: 0,
+      updatedAt: 0,
+      subFolders: [],
+      kind: 'folder',
+      files: [
+        {
+          name: 'README.md',
+          createdAt: 0,
+          updatedAt: 0,
+          content: '# MordOs',
+          kind: 'file',
+        },
+      ],
     },
   ],
-  files: [],
 };
 
 export const directorySlice = createSlice({
   name: 'directory',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     addFile: (state, action: PayloadAction<File>) => {
@@ -46,7 +55,6 @@ export const directorySlice = createSlice({
 
 export const { addFile } = directorySlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectState = (state: RootState) => state;
 
 export default directorySlice.reducer;
