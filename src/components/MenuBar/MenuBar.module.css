@@ -1,0 +1,11 @@
+.container {
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px 12px;
+  background: rgba(227, 227, 227, 0.5);
+  backdrop-filter: blur(15px);
+}
+.dateTimeContainer {
+  flex-direction: row;
+  gap: 10px;
+}
