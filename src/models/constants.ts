@@ -1,12 +1,14 @@
 import arrowRight from 'assets/icons/arrow-right.svg';
 import browser from 'assets/icons/browser.svg';
 import camera from 'assets/icons/camera.svg';
+import close from 'assets/icons/close.svg';
 import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import folder from 'assets/icons/folder.svg';
 import image from 'assets/icons/image.svg';
 import lockIcon from 'assets/icons/lock.svg';
 import logo from 'assets/icons/logo.svg';
+import minimize from 'assets/icons/minimize.svg';
 import news from 'assets/icons/news.svg';
 import notes from 'assets/icons/notes.svg';
 import tick from 'assets/icons/tick.svg';
@@ -27,6 +29,8 @@ export const Icons = {
   IMAGE: image,
   NEWS: news,
   NOTES: notes,
+  CLOSE: close,
+  MINIMIZE: minimize,
 };
 
 export const Images = {
