@@ -64,12 +64,7 @@ function TextInput({
         />
         {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
       </div>
-      {rightIcon && (
-        <>
-          <div className={styles.rightIcon}>{rightIcon}</div>
-          <div className={styles.divider} />
-        </>
-      )}
+      {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
     </FlexDiv>
   );
 }
