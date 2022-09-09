@@ -38,7 +38,8 @@
 }
 .footer {
   flex-direction: row;
-  height: 40px;
+  height: fit-content;
+  min-height: 40px;
 }
 
 @media only screen and (min-width: 768px) {
