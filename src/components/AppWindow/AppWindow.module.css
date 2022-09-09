@@ -24,6 +24,7 @@
 .rightIcons {
   flex: 1;
   padding-right: 1rem;
+  gap: 12px;
   flex-direction: row;
   justify-content: end;
   align-items: center;
