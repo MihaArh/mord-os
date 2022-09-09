@@ -2,6 +2,7 @@ import arrowRight from 'assets/icons/arrow-right.svg';
 import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import lockIcon from 'assets/icons/lock.svg';
+import tick from 'assets/icons/tick.svg';
 import userIcon from 'assets/icons/user.svg';
 import avatar from 'assets/images/Avatar.png';
 
@@ -11,6 +12,7 @@ export const Icons = {
   LOCK: lockIcon,
   USER: userIcon,
   ARROW_RIGHT: arrowRight,
+  TICK: tick,
 };
 
 export const Images = {

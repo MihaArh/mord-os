@@ -10,6 +10,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   rightIcon?: React.ReactNode;
   errorMessage?: string;
   hideText?: boolean;
+  hasError?: boolean;
 }
 function TextInput({
   onValueChange,
@@ -17,6 +18,7 @@ function TextInput({
   rightIcon,
   errorMessage,
   hideText = false,
+  hasError = false,
   ...restProps
 }: TextInputProps) {
   const [inputType, setInputType] = useState('text');
@@ -45,7 +47,7 @@ function TextInput({
       className={classNames(
         styles.container,
         isFocused ? styles.inputFocus : '',
-        errorMessage ? styles.inputError : '',
+        errorMessage || hasError ? styles.inputError : '',
       )}>
       {leftIcon && (
         <>

@@ -32,4 +32,18 @@
   color: var(--error-color);
 }
 .loginSuccessful {
+  background-color: var(--success-color);
+  animation: rotateReveal 1s linear;
+}
+.loginFailed {
+  border-color: var(--error-color);
+}
+
+@keyframes rotateReveal {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
 }

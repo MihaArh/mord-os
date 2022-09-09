@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import DesktopBackground from 'components/DesktopBackground';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
@@ -8,12 +9,14 @@ import React, { useState } from 'react';
 import styles from './Authentication.module.css';
 
 function Authentication() {
-  const [email, setEmail] = useState('');
+  // TODO remove email and password
+  const [email, setEmail] = useState('borgoth@mordos.com');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('12bindthema');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
   const [credentialsErrorMessage, setCredentialsErrorMessage] = useState('');
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
 
   function validateEmail() {
     if (email.length === 0) {
@@ -37,10 +40,12 @@ function Authentication() {
 
   function onEmailChangeHandler(text: string) {
     setEmail(text);
+    setCredentialsErrorMessage('');
   }
 
   function onPasswordChangeHandler(text: string) {
     setPassword(text);
+    setCredentialsErrorMessage('');
   }
 
   function onPasswordVisibilityClick() {
@@ -50,14 +55,12 @@ function Authentication() {
   function onLoginIconClick() {
     validateEmail();
     validatePassword();
-    if (emailErrorMessage || passwordErrorMessage) {
-      return;
-    }
-    if (email !== USER.EMAIL && password !== USER.PASSWORD) {
+
+    if (email !== USER.EMAIL || password !== USER.PASSWORD) {
       setCredentialsErrorMessage('Invalid email or password');
       return;
     }
-    setCredentialsErrorMessage('');
+    setIsLoginSuccessful(true);
   }
   return (
     <DesktopBackground blurred>
@@ -70,6 +73,7 @@ function Authentication() {
             onValueChange={onEmailChangeHandler}
             onBlur={validateEmail}
             errorMessage={emailErrorMessage}
+            hasError={!!emailErrorMessage || !!credentialsErrorMessage}
             required
             leftIcon={<Icon size="small" src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
             placeholder="Email"
@@ -79,6 +83,7 @@ function Authentication() {
             onValueChange={onPasswordChangeHandler}
             onBlur={validatePassword}
             errorMessage={passwordErrorMessage}
+            hasError={!!passwordErrorMessage || !!credentialsErrorMessage}
             leftIcon={<Icon size="small" src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
             rightIcon={
               <Icon
@@ -92,9 +97,21 @@ function Authentication() {
             placeholder="Password"
             hideText={hidePassword}
           />
-          <FlexDiv className={styles.credentialsError}>{credentialsErrorMessage}</FlexDiv>
-          <div className={styles.circle}>
-            <Icon size="large" src={Icons.ARROW_RIGHT} alt="Right Arrow" onClick={onLoginIconClick} />
+          {(!emailErrorMessage || !passwordErrorMessage) && (
+            <FlexDiv className={styles.credentialsError}>{credentialsErrorMessage}</FlexDiv>
+          )}
+          <div
+            className={classNames(
+              credentialsErrorMessage ? styles.loginFailed : '',
+              isLoginSuccessful ? styles.loginSuccessful : '',
+              styles.circle,
+            )}>
+            <Icon
+              size="large"
+              src={isLoginSuccessful ? Icons.TICK : Icons.ARROW_RIGHT}
+              alt="Right Arrow"
+              onClick={onLoginIconClick}
+            />
           </div>
         </FlexDiv>
       </FlexDiv>
