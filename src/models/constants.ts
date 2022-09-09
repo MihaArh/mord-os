@@ -6,20 +6,22 @@ import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import folder from 'assets/icons/folder.svg';
 import image from 'assets/icons/image.svg';
-import lockIcon from 'assets/icons/lock.svg';
+import lock from 'assets/icons/lock.svg';
 import logo from 'assets/icons/logo.svg';
 import minimize from 'assets/icons/minimize.svg';
 import news from 'assets/icons/news.svg';
 import notes from 'assets/icons/notes.svg';
+import save from 'assets/icons/save.svg';
 import tick from 'assets/icons/tick.svg';
-import userIcon from 'assets/icons/user.svg';
+import trash from 'assets/icons/trash.svg';
+import user from 'assets/icons/user.svg';
 import avatar from 'assets/images/Avatar.png';
 
 export const Icons = {
   EYE_DISABLE: eyeDisable,
   EYE: eyeIcon,
-  LOCK: lockIcon,
-  USER: userIcon,
+  LOCK: lock,
+  USER: user,
   ARROW_RIGHT: arrowRight,
   TICK: tick,
   LOGO: logo,
@@ -31,6 +33,8 @@ export const Icons = {
   NOTES: notes,
   CLOSE: close,
   MINIMIZE: minimize,
+  SAVE: save,
+  TRASH: trash,
 };
 
 export const Images = {
