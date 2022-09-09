@@ -2,7 +2,15 @@
   align-items: center;
   justify-content: space-between;
 }
-.avatarImage {
+.avatarContainer {
+  background-color: var(--light-gray);
+  border-radius: 50%;
   width: 200px;
   height: 200px;
+  justify-content: center;
+  align-items: center;
+}
+.avatarImage {
+  width: 150px;
+  height: 150px;
 }

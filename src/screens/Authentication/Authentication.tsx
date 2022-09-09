@@ -1,34 +1,83 @@
-import EYE_ICON from 'assets/icons/eye.svg';
-import LOCK_ICON from 'assets/icons/lock.svg';
-import USER_ICON from 'assets/icons/user.svg';
-import Avatar from 'assets/images/Avatar.png';
 import DesktopBackground from 'components/DesktopBackground';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import TextInput from 'components/TextInput';
-import React from 'react';
+import { EMAIL_REGEX, Icons, Images } from 'models/constants';
+import React, { useState } from 'react';
 
 import styles from './Authentication.module.css';
 
 function Authentication() {
+  const [email, setEmail] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
+
+  function validateEmail() {
+    if (email.length === 0) {
+      setEmailErrorMessage('Email is required');
+      return;
+    }
+    if (!email.toLowerCase().match(EMAIL_REGEX)) {
+      setEmailErrorMessage('Email is invalid');
+      return;
+    }
+    setEmailErrorMessage('');
+  }
+
+  function validatePassword() {
+    if (password.length === 0) {
+      setPasswordErrorMessage('Password is required');
+      return;
+    }
+    setPasswordErrorMessage('');
+  }
+
+  function onEmailChangeHandler(text: string) {
+    setEmail(text);
+  }
+
+  function onPasswordChangeHandler(text: string) {
+    setPassword(text);
+  }
+
+  function onPasswordVisibilityClick() {
+    setHidePassword(prevPasswordVisibility => !prevPasswordVisibility);
+  }
   return (
     <DesktopBackground blurred>
       <FlexDiv className={styles.container}>
-        <img src={Avatar} alt="Avatar" className={styles.avatarImage} />
+        <FlexDiv className={styles.avatarContainer}>
+          <img src={Images.AVATAR} alt="Avatar" className={styles.avatarImage} />
+        </FlexDiv>
         <TextInput
-          leftIcon={<Icon size="small" src={USER_ICON} alt="User Icon" className={styles.leftIcon} />}
+          onValueChange={onEmailChangeHandler}
+          onBlur={validateEmail}
+          errorMessage={emailErrorMessage}
+          required
+          leftIcon={<Icon size="small" src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
           placeholder="Email"
         />
         <TextInput
-          leftIcon={<Icon size="small" src={LOCK_ICON} alt="Lock Icon" className={styles.leftIcon} />}
-          rightIcon={<Icon size="small" src={EYE_ICON} alt="Eye Icon" className={styles.leftIcon} />}
+          required
+          onValueChange={onPasswordChangeHandler}
+          onBlur={validatePassword}
+          errorMessage={passwordErrorMessage}
+          leftIcon={<Icon size="small" src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
+          rightIcon={
+            <Icon
+              size="small"
+              src={hidePassword ? Icons.EYE : Icons.EYE_DISABLE}
+              onClick={onPasswordVisibilityClick}
+              alt="Hide Password"
+              className={styles.leftIcon}
+            />
+          }
           placeholder="Password"
-          hideText
+          hideText={hidePassword}
         />
       </FlexDiv>
-
-      {/* <Avatar /> */}
-      {/* <LoginForm /> */}
     </DesktopBackground>
   );
 }
