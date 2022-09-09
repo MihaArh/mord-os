@@ -25,12 +25,8 @@ function FileEditor() {
           <Icon src={Icons.TRASH} alt="Trash icon" size="small" onClick={onDeleteClickHandler} />
         </FlexDiv>
       }
-      footer={
-        <FlexDiv className={styles.footer}>
-          <FlexDiv className={styles.footerLeft}>MordOs\Files\Test\New File Name</FlexDiv>
-          <FlexDiv className={styles.footerRight}>Last Change: 09/28/2021, 10:44 </FlexDiv>
-        </FlexDiv>
-      }>
+      footerLeft={<FlexDiv>MordOs\Files\Test\New File Name</FlexDiv>}
+      footerRight={<FlexDiv>Last Change: 09/28/2021, 10:44 </FlexDiv>}>
       <FlexDiv className={styles.container}>
         <textarea className={styles.textArea} />
       </FlexDiv>

@@ -11,11 +11,21 @@ interface AppWindowProps {
   title: string;
   isResizable?: boolean;
   leftIcons?: React.ReactNode;
-  footer?: React.ReactNode;
+  footerLeft?: React.ReactNode;
+  footerRight?: React.ReactNode;
   onClose?: () => void;
   onMinimize?: () => void;
 }
-function AppWindow({ children, title, onClose, onMinimize, footer, isResizable = false, leftIcons }: AppWindowProps) {
+function AppWindow({
+  children,
+  title,
+  onClose,
+  onMinimize,
+  footerLeft,
+  footerRight,
+  isResizable = false,
+  leftIcons,
+}: AppWindowProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -68,10 +78,13 @@ function AppWindow({ children, title, onClose, onMinimize, footer, isResizable =
 
       <div className={styles.divider} />
       <FlexDiv className={styles.content}>{children}</FlexDiv>
-      {footer && (
+      {(footerLeft || footerRight) && (
         <>
           <div className={styles.divider} />
-          <FlexDiv className={styles.footer}>{footer}</FlexDiv>
+          <FlexDiv className={styles.footer}>
+            {footerLeft}
+            {footerRight}
+          </FlexDiv>
         </>
       )}
     </FlexDiv>

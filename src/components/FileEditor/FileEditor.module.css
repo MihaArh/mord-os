@@ -15,10 +15,3 @@
   flex-direction: row;
   gap: 12px;
 }
-.footer {
-  padding: 0 1rem;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}

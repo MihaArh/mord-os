@@ -37,9 +37,12 @@
   flex: 1;
 }
 .footer {
-  flex-direction: row;
   height: fit-content;
   min-height: 40px;
+  padding: 0 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media only screen and (min-width: 768px) {
