@@ -11,7 +11,11 @@ interface IconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 function Icon({ size, alt, className, ...props }: IconProps) {
   return (
     <img
-      className={classNames(size === 'small' ? styles.smallIcon : styles.largeIcon, className)}
+      className={classNames(
+        size === 'small' ? styles.smallIcon : styles.largeIcon,
+        props.onClick ? styles.clickable : '',
+        className,
+      )}
       alt={alt}
       {...props}
     />
