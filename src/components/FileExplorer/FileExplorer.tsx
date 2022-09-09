@@ -1,51 +1,46 @@
 import AppWindow from 'components/AppWindow';
 import FlexDiv from 'components/FlexDiv';
+import Icon from 'components/Icon';
 import useAppSelector from 'hooks/useAppSelector';
-import React, { useEffect, useState } from 'react';
+import { Icons } from 'models/constants';
+import React from 'react';
+import { selectDirectoryName, selectDirectoryPath, selectFiles } from 'store/directorySlice';
+
+import styles from './FileExplorer.module.css';
 
 function FileExplorer() {
-  const [directoryDepth, setDirectoryDepth] = useState(0);
-  const [path, setPath] = useState('');
-  const { folderName, subFolders, files } = useAppSelector(state => state.directory);
-  const numberOfItems = subFolders.length + (files ? files.length : 0);
-  useEffect(() => {
-    setPath(prevPath => `${prevPath}\\${folderName}`);
-  }, [directoryDepth, folderName]);
+  const files = useAppSelector(selectFiles);
+  const directoryName = useAppSelector(selectDirectoryName);
+  const directoryPath = useAppSelector(selectDirectoryPath);
+
+  const rightFooter = `${files.length} ${files.length === 1 ? 'file' : 'files'}`;
+
+  function renderItems() {
+    return files.map(item => (
+      <FlexDiv key={`${item.name}${item.createdAt}`} className={styles.row}>
+        <div className={styles.rowIcon}>
+          <Icon src={Icons.FILE_SOLID} alt="File" size="small" />
+        </div>
+        <div className={styles.rowItem}>{item.name}</div>
+        <div className={styles.rowItem}>{item.updatedAt}</div>
+      </FlexDiv>
+    ));
+  }
 
   return (
     <AppWindow
       isResizable
-      title="File Explorer"
-      footerLeft={<FlexDiv>{path}</FlexDiv>}
-      footerRight={`${numberOfItems} item${numberOfItems !== 1 ? 's' : ''}`}>
-      <FlexDiv>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Size</th>
-              <th>Modified</th>
-            </tr>
-          </thead>
-          <tbody>
-            {subFolders &&
-              subFolders.map(file => (
-                <tr key={`${file.folderName}${file.createdAt}`}>
-                  <td>{file.folderName}</td>
-                  <td>{file.updatedAt}</td>
-                  <td>{file.kind}</td>
-                </tr>
-              ))}
-            {files &&
-              files.map(file => (
-                <tr key={`${file.name}${file.name}`}>
-                  <td>{file.name}</td>
-                  <td>{file.updatedAt}</td>
-                  <td>{file.kind}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+      title={directoryName}
+      footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}
+      footerRight={rightFooter}>
+      <FlexDiv className={styles.table}>
+        <FlexDiv className={styles.header}>
+          <div className={styles.rowItem}>Name</div>
+          <div className={styles.rowItem}>Last Modified</div>
+          <div className={styles.rowItem}>Kind</div>
+        </FlexDiv>
+        <div className="divider" />
+        <FlexDiv className={styles.body}>{!files ? 'Directory is Empty' : renderItems()}</FlexDiv>
       </FlexDiv>
     </AppWindow>
   );
