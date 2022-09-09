@@ -1,18 +1,20 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes, HTMLProps } from 'react';
+import React from 'react';
 
 import styles from './FlexDiv.module.css';
 
-interface FlexDivProps extends HTMLAttributes<HTMLDivElement>, HTMLProps<HTMLDivElement> {
+interface FlexDivProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
 }
-function FlexDiv({ children, className, ...restProps }: FlexDivProps) {
+
+const FlexDiv = React.forwardRef<HTMLDivElement, FlexDivProps>((props, ref) => {
+  const { children, className, ...restProps } = props;
   return (
-    <div className={classNames(styles.container, className)} {...restProps}>
+    <div className={classNames(styles.container, className)} ref={ref} {...restProps}>
       {children}
     </div>
   );
-}
+});
 
 export default FlexDiv;
