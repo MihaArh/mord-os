@@ -1,16 +1,11 @@
 .container {
   border-radius: 12px;
-  height: 700px;
-  width: 700px;
-  max-width: 100vw;
-  max-height: 100vh;
+  height: 100%;
+  width: 100%;
   background-color: var(--light-gray);
   position: absolute;
 }
-.resizable {
-  overflow: auto;
-  resize: both;
-}
+
 .header {
   flex-direction: row;
   height: 40px;
@@ -43,4 +38,17 @@
 .footer {
   flex-direction: row;
   height: 40px;
+}
+
+@media only screen and (min-width: 768px) {
+  .resizable {
+    overflow: auto;
+    resize: both;
+  }
+  .container {
+    height: 700px;
+    width: 700px;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
 }
