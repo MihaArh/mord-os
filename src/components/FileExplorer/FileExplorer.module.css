@@ -11,6 +11,9 @@ td {
 }
 
 .row:hover {
+  background-color: var(--dark-gray);
+}
+.selected {
   background-color: var(--primary-color);
 }
 .body {
