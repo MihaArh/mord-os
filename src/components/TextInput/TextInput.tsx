@@ -1,19 +1,24 @@
 import classNames from 'classnames';
 import FlexDiv from 'components/FlexDiv';
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import styles from './TextInput.module.css';
 
-interface TextInputProps {
-  onChange?: () => void;
-
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  onValueChange?: (text: string) => void;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  placeholder?: string;
   errorMessage?: string;
   hideText?: boolean;
 }
-function TextInput({ onChange, leftIcon, rightIcon, placeholder, errorMessage, hideText = false }: TextInputProps) {
+function TextInput({
+  onValueChange,
+  leftIcon,
+  rightIcon,
+  errorMessage,
+  hideText = false,
+  ...restProps
+}: TextInputProps) {
   const [inputType, setInputType] = useState('text');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -29,8 +34,19 @@ function TextInput({ onChange, leftIcon, rightIcon, placeholder, errorMessage, h
     setIsFocused(false);
   }
 
+  function onInput(e: FormEvent<HTMLInputElement>) {
+    if (onValueChange) {
+      onValueChange((e.target as HTMLInputElement).value);
+    }
+  }
+
   return (
-    <FlexDiv className={classNames(styles.container, isFocused ? styles.inputFocus : '')}>
+    <FlexDiv
+      className={classNames(
+        styles.container,
+        isFocused ? styles.inputFocus : '',
+        errorMessage ? styles.inputError : '',
+      )}>
       {leftIcon && (
         <>
           <div className={styles.leftIcon}>{leftIcon}</div>
@@ -40,14 +56,13 @@ function TextInput({ onChange, leftIcon, rightIcon, placeholder, errorMessage, h
       <div className={styles.inputDiv}>
         <input
           type={inputType}
-          name="email"
-          onInput={onChange}
+          onInput={onInput}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
           className={styles.input}
-          placeholder={placeholder}
+          {...restProps}
         />
-        {errorMessage && <span>{errorMessage}</span>}
+        {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
       </div>
       {rightIcon && (
         <>
