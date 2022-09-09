@@ -1,14 +1,17 @@
 .container {
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--dark-gray);
   border-radius: 16px;
-  background-color: #f6f6f6;
+  background-color: var(--light-gray);
   align-items: center;
   flex-direction: row;
   width: 300px;
   height: 50px;
 }
-.input:focus .container {
-  border-color: black;
+.inputFocus {
+  border-color: var(--primary-color);
+}
+.inputError {
+  border-color: var(--secondary-color);
 }
 .rightIcon,
 .leftIcon {
@@ -17,7 +20,7 @@
 .divider {
   width: 1px;
   height: 80%;
-  border-right: #d9d9d9 1px solid;
+  border-right: var(--dark-gray) 1px solid;
 }
 .inputDiv {
   display: flex;
