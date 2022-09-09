@@ -2,7 +2,7 @@ import DesktopBackground from 'components/DesktopBackground';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import TextInput from 'components/TextInput';
-import { EMAIL_REGEX, Icons, Images } from 'models/constants';
+import { EMAIL_REGEX, Icons, Images, USER } from 'models/constants';
 import React, { useState } from 'react';
 
 import styles from './Authentication.module.css';
@@ -13,6 +13,7 @@ function Authentication() {
   const [password, setPassword] = useState('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
+  const [credentialsErrorMessage, setCredentialsErrorMessage] = useState('');
 
   function validateEmail() {
     if (email.length === 0) {
@@ -44,6 +45,19 @@ function Authentication() {
 
   function onPasswordVisibilityClick() {
     setHidePassword(prevPasswordVisibility => !prevPasswordVisibility);
+  }
+
+  function onLoginIconClick() {
+    validateEmail();
+    validatePassword();
+    if (emailErrorMessage || passwordErrorMessage) {
+      return;
+    }
+    if (email !== USER.EMAIL && password !== USER.PASSWORD) {
+      setCredentialsErrorMessage('Invalid email or password');
+      return;
+    }
+    setCredentialsErrorMessage('');
   }
   return (
     <DesktopBackground blurred>
@@ -77,6 +91,10 @@ function Authentication() {
           placeholder="Password"
           hideText={hidePassword}
         />
+        <div className={styles.credentialsError}>{credentialsErrorMessage}</div>
+        <div className={styles.circle}>
+          <Icon size="large" src={Icons.ARROW_RIGHT} alt="Right Arrow" onClick={onLoginIconClick} />
+        </div>
       </FlexDiv>
     </DesktopBackground>
   );

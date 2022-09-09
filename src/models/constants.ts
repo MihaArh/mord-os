@@ -1,3 +1,4 @@
+import arrowRight from 'assets/icons/arrow-right.svg';
 import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import lockIcon from 'assets/icons/lock.svg';
@@ -9,6 +10,7 @@ export const Icons = {
   EYE: eyeIcon,
   LOCK: lockIcon,
   USER: userIcon,
+  ARROW_RIGHT: arrowRight,
 };
 
 export const Images = {
@@ -18,3 +20,8 @@ export const Images = {
 export const EMAIL_REGEX =
   /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z\s]{2,}))$/;
 export const PASSWORD_REGEX = /^.{8,}$/;
+
+export const USER = {
+  EMAIL: 'borgoth@mordos.com',
+  PASSWORD: '12bindthem',
+};

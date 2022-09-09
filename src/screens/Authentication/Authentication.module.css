@@ -14,3 +14,14 @@
   width: 150px;
   height: 150px;
 }
+.circle {
+  display: flex;
+  background-color: var(--light-gray);
+  border-radius: 50%;
+  border: 1px solid var(--dark-gray);
+  justify-content: center;
+  align-items: center;
+}
+.credentialsError {
+  color: var(--error-color);
+}
