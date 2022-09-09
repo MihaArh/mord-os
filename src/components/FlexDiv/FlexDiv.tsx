@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { HTMLAttributes, HTMLProps } from 'react';
 
 import styles from './FlexDiv.module.css';
 
-interface FlexDivProps extends React.HTMLAttributes<HTMLDivElement> {
+interface FlexDivProps extends HTMLAttributes<HTMLDivElement>, HTMLProps<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
 }
