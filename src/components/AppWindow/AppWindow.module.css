@@ -3,6 +3,7 @@
   height: 100%;
   width: 100%;
   background-color: var(--light-gray);
+  border: 1px solid var(--dark-gray);
   position: absolute;
 }
 
