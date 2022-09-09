@@ -1,9 +1,14 @@
+import arrowDown from 'assets/icons/arrow-down.svg';
+import arrowLeft from 'assets/icons/arrow-left.svg';
 import arrowRight from 'assets/icons/arrow-right.svg';
+import arrowUp from 'assets/icons/arrow-up.svg';
 import browser from 'assets/icons/browser.svg';
 import camera from 'assets/icons/camera.svg';
 import close from 'assets/icons/close.svg';
 import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
+import fileSolid from 'assets/icons/file-solid.svg';
+import folderSolid from 'assets/icons/folder-solid.svg';
 import folder from 'assets/icons/folder.svg';
 import image from 'assets/icons/image.svg';
 import lock from 'assets/icons/lock.svg';
@@ -11,6 +16,7 @@ import logo from 'assets/icons/logo.svg';
 import minimize from 'assets/icons/minimize.svg';
 import news from 'assets/icons/news.svg';
 import notes from 'assets/icons/notes.svg';
+import pencil from 'assets/icons/pencil.svg';
 import save from 'assets/icons/save.svg';
 import tick from 'assets/icons/tick.svg';
 import trash from 'assets/icons/trash.svg';
@@ -35,6 +41,12 @@ export const Icons = {
   MINIMIZE: minimize,
   SAVE: save,
   TRASH: trash,
+  FILE_SOLID: fileSolid,
+  FOLDER_SOLID: folderSolid,
+  ARROW_UP: arrowUp,
+  ARROW_DOWN: arrowDown,
+  ARROW_LEFT: arrowLeft,
+  PENCIL: pencil,
 };
 
 export const Images = {
