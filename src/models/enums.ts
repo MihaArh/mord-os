@@ -1,4 +1,4 @@
-export enum AppNames {
+default export enum AppNames {
   NOTES = 'Notes',
   FILES = 'Files',
   BROWSER = 'Browser',

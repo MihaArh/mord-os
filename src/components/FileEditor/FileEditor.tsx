@@ -3,7 +3,8 @@ import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
-import { AppNames, Icons } from 'models/constants';
+import { Icons } from 'models/constants';
+import { AppNames } from 'models/enums';
 import React, { useEffect, useRef, useState } from 'react';
 import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
 import {

@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppNames, Icons } from 'models/constants';
+import { Icons } from 'models/constants';
+import { AppNames } from 'models/enums';
 
 import type { RootState } from './configureStore';
 
