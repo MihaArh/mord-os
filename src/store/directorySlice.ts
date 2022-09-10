@@ -37,18 +37,13 @@ export const directorySlice = createSlice({
       state.files = state.files.filter(file => file.id !== action.payload);
     },
     addFile: (state, action: PayloadAction<File>) => {
-      const file = {
-        ...action.payload,
-        id: state.files[state.files.length - 1].id + 1,
-      };
-      state.files.push(file);
+      state.files.push(action.payload);
     },
     updateFile: (state, action: PayloadAction<Partial<File>>) => {
       const foundFile = state.files.find(file => file.name === action.payload.name);
       if (foundFile) {
         foundFile.content = action.payload.content || foundFile.content;
         foundFile.name = action.payload.name || foundFile.name;
-        // foundFile.opened = action.payload.opened || foundFile.opened;
         foundFile.updatedAt = new Date().getTime();
       }
     },
@@ -83,6 +78,12 @@ export const selectAvailableName = createSelector([selectFilesByName], files => 
     availableName = `${name} (${count})`;
   }
   return availableName;
+});
+
+export const selectAvailableId = createSelector([selectFiles], files => {
+  const lastFile = files[files.length - 1];
+  if (!lastFile) return 1 + Date.now();
+  return lastFile.id + 1 + Date.now();
 });
 
 export default directorySlice.reducer;

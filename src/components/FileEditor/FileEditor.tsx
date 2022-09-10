@@ -13,6 +13,8 @@ import {
   selectFileById,
   addFile,
   updateFile,
+  deleteFile,
+  selectAvailableId,
 } from 'store/directorySlice';
 import getTimeAndDate from 'utils/date';
 
@@ -32,6 +34,7 @@ function FileEditor({ fileId }: FileEditorProps) {
   const dateAndTime = file ? getTimeAndDate(file?.updatedAt) : '';
   const dispatch = useAppDispatch();
   const availableFilenameSelector = useAppSelector(selectAvailableName);
+  const availableIdSelector = useAppSelector(selectAvailableId);
 
   useEffect(() => {
     if (isCreated) return;
@@ -43,9 +46,10 @@ function FileEditor({ fileId }: FileEditorProps) {
       }
     } else {
       const newFilename = availableFilenameSelector(FILENAME);
-      setFile({ name: newFilename, content: '', createdAt: Date.now(), updatedAt: Date.now(), id: 0 });
+      const newId = availableIdSelector;
+      setFile({ name: newFilename, content: '', createdAt: Date.now(), updatedAt: Date.now(), id: newId });
     }
-  }, [availableFilenameSelector, fileId, isCreated, selectFileByIdSelector]);
+  }, [availableFilenameSelector, availableIdSelector, fileId, isCreated, selectFileByIdSelector]);
   useEffect(() => {
     const timer = setTimeout(() => {
       setSavedSuccessfully(false);
@@ -62,16 +66,23 @@ function FileEditor({ fileId }: FileEditorProps) {
   }
   function onSaveClickHandler() {
     if (!file) return;
-    file.content = textAreaRef.current!.value;
+
+    const copyFile = { ...file };
+    copyFile.content = textAreaRef.current!.value;
     if (!fileId && !isCreated) {
-      dispatch(addFile(file));
+      dispatch(addFile(copyFile));
       setIsCreated(true);
-      return;
+    } else {
+      dispatch(updateFile(copyFile));
     }
-    dispatch(updateFile(file));
+
     setSavedSuccessfully(true);
   }
-  function onDeleteClickHandler() {}
+  function onDeleteClickHandler() {
+    if (!file) return;
+    dispatch(deleteFile(file.id));
+    dispatch(closeApplication(AppNames.NOTES));
+  }
   return (
     <AppWindow
       onClose={onCloseAppHandler}
