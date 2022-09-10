@@ -8,8 +8,7 @@ export interface File {
   createdAt: number;
   updatedAt: number;
   content: string;
-  selected: boolean;
-  oppened: boolean;
+  opened: boolean;
 }
 export interface DirectoryState {
   name: string;
@@ -23,12 +22,11 @@ const initialState: DirectoryState = {
   files: [
     {
       id: 0,
-      name: 'README.md',
-      createdAt: 0,
-      updatedAt: 0,
+      name: 'New File',
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
       content: '# MordOs',
-      selected: false,
-      oppened: false,
+      opened: false,
     },
   ],
 };
@@ -41,26 +39,48 @@ export const directorySlice = createSlice({
       state.files = state.files.filter(file => file.id !== action.payload);
     },
     addFile: (state, action: PayloadAction<File>) => {
-      state.files.push(action.payload);
+      const file = {
+        ...action.payload,
+        id: state.files[state.files.length - 1].id + 1,
+      };
+      state.files.push(file);
     },
-    addFileToDirectory: (state, action: PayloadAction<{ file: File; path: string[] }>) => {
-      const { file, path } = action.payload;
-    },
-    selectItem: (state, action: PayloadAction<number>) => {
-      const id = action.payload;
-      const selectedFile = state.files.find(file => file.id === id);
-      if (selectedFile) {
-        selectedFile.selected = !selectedFile.selected;
+    updateFile: (state, action: PayloadAction<Partial<File>>) => {
+      const foundFile = state.files.find(file => file.name === action.payload.name);
+      if (foundFile) {
+        foundFile.content = action.payload.content || foundFile.content;
+        foundFile.name = action.payload.name || foundFile.name;
+        foundFile.opened = action.payload.opened || foundFile.opened;
+        foundFile.updatedAt = new Date().getTime();
       }
     },
   },
 });
 
-export const { addFile, deleteFile } = directorySlice.actions;
+export const { addFile, deleteFile, updateFile } = directorySlice.actions;
 
 export const selectRootDirectory = (state: RootState) => state.directory;
 export const selectDirectoryName = createSelector(selectRootDirectory, directory => directory.name);
 export const selectDirectoryPath = createSelector(selectRootDirectory, directory => directory.path);
 export const selectFiles = createSelector([selectRootDirectory], directory => directory.files);
+export const selectFilesByName = createSelector(
+  [selectFiles],
+  directory => (name: string) => directory.filter(file => file.name === name),
+);
+export const selectAvailableName = createSelector([selectFilesByName], files => (name: string) => {
+  let count = 0;
+  let found = false;
+  let availableName = name;
+  while (!found) {
+    const sameNames = files(availableName);
+    if (sameNames.length === 0) {
+      found = true;
+      return availableName;
+    }
+    count += 1;
+    availableName = `${name} (${count})`;
+  }
+  return availableName;
+});
 
 export default directorySlice.reducer;

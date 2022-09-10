@@ -1,23 +1,63 @@
 import AppWindow from 'components/AppWindow';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
+import useAppDispatch from 'hooks/useAppDispatch';
+import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { selectAvailableName, selectDirectoryPath, addFile, File, updateFile } from 'store/directorySlice';
+import getTimeAndDate from 'utils/date';
 
 import styles from './FileEditor.module.css';
 
-const TITLE = 'New File';
+const FILENAME = 'New File';
+interface FileEditorProps {
+  isNewFile?: boolean;
+  filename?: string;
+}
+function FileEditor({ isNewFile, filename = FILENAME }: FileEditorProps) {
+  const directoryPath = useAppSelector(selectDirectoryPath);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [lastChanged, setLastChanged] = useState(0);
+  const [newFilename, setNewFilename] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
+  const dateAndTime = getTimeAndDate(lastChanged);
+  const dispatch = useAppDispatch();
+  const availableFilename = useAppSelector(selectAvailableName)(filename);
 
-function FileEditor() {
+  useEffect(() => {
+    if (isNewFile && !isSaved) {
+      setLastChanged(Date.now());
+      setNewFilename(availableFilename);
+    }
+  }, [availableFilename, isNewFile, isSaved]);
+
   function onSaveClickHandler() {
-    console.log('save');
+    if (!isSaved) {
+      const file: File = {
+        name: newFilename,
+        content: textAreaRef.current!.value,
+        opened: true,
+        createdAt: lastChanged,
+        updatedAt: lastChanged,
+        id: 0,
+      };
+      dispatch(addFile(file));
+      setIsSaved(true);
+      return;
+    }
+
+    const file: Partial<File> = {
+      name: newFilename,
+      content: textAreaRef.current!.value,
+      opened: true,
+    };
+    dispatch(updateFile(file));
   }
-  function onDeleteClickHandler() {
-    console.log('delete');
-  }
+  function onDeleteClickHandler() {}
   return (
     <AppWindow
-      title={TITLE}
+      title={newFilename}
       isResizable
       leftIcons={
         <FlexDiv className={styles.leftIcons}>
@@ -25,10 +65,10 @@ function FileEditor() {
           <Icon src={Icons.TRASH} alt="Trash icon" size="small" onClick={onDeleteClickHandler} />
         </FlexDiv>
       }
-      footerLeft={<FlexDiv>MordOs\Files\Test\New File Name</FlexDiv>}
-      footerRight={<FlexDiv>Last Change: 09/28/2021, 10:44 </FlexDiv>}>
+      footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}
+      footerRight={<FlexDiv>Last Change: {dateAndTime}</FlexDiv>}>
       <FlexDiv className={styles.container}>
-        <textarea className={styles.textArea} />
+        <textarea className={styles.textArea} ref={textAreaRef} />
       </FlexDiv>
     </AppWindow>
   );
