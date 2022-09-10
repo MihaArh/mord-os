@@ -1,6 +1,7 @@
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import { Icons } from 'models/constants';
+import { Size } from 'models/enums';
 import React, { useEffect, useState } from 'react';
 
 import styles from './MenuBar.module.css';
@@ -22,7 +23,7 @@ function MenuBar() {
 
   return (
     <FlexDiv className={styles.container}>
-      <Icon src={Icons.LOGO} alt="Logo" size="small" />
+      <Icon src={Icons.LOGO} alt="Logo" size={Size.SMALL} />
       <FlexDiv className={styles.dateTimeContainer}>
         <div>{localizedDate}</div>
         <div>{formattedTime}</div>

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import { Icons } from 'models/constants';
+import { Size } from 'models/enums';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './AppWindow.module.css';
@@ -74,8 +75,8 @@ function AppWindow({
         <FlexDiv className={styles.leftIcons}>{leftIcons}</FlexDiv>
         <FlexDiv className={styles.title}>{title}</FlexDiv>
         <FlexDiv className={styles.rightIcons}>
-          <Icon size="small" src={Icons.MINIMIZE} alt="Minimize icon" onClick={onMinimize} />
-          <Icon size="small" src={Icons.CLOSE} alt="Close icon" onClick={onClose} />
+          <Icon size={Size.SMALL} src={Icons.MINIMIZE} alt="Minimize icon" onClick={onMinimize} />
+          <Icon size={Size.SMALL} src={Icons.CLOSE} alt="Close icon" onClick={onClose} />
         </FlexDiv>
       </FlexDiv>
 

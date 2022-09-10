@@ -7,4 +7,7 @@ export enum AppNames {
   NEWS = 'News',
 }
 
-export default AppNames;
+export enum Size {
+  SMALL = 'small',
+  LARGE = 'large',
+}

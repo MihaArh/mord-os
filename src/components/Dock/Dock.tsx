@@ -2,6 +2,7 @@ import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
+import { Size } from 'models/enums';
 import React from 'react';
 import { selectApps, openApplication } from 'store/applicationsSlice';
 
@@ -20,7 +21,7 @@ function Dock() {
         <FlexDiv className={styles.iconContainer} key={app.name}>
           <div className={styles.tooltip}>{app.tooltip}</div>
           <Icon
-            size="large"
+            size={Size.LARGE}
             src={app.icon}
             alt={app.name}
             onClick={openApp}

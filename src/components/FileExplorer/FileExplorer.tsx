@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
-import { AppNames } from 'models/enums';
+import { AppNames, Size } from 'models/enums';
 import React, { useState } from 'react';
 import { closeApplication, interactedWithApplication, openApplication } from 'store/applicationsSlice';
 import { deleteFile, selectDirectoryName, selectDirectoryPath, selectFiles } from 'store/directorySlice';
@@ -60,7 +60,7 @@ function FileExplorer() {
           onClick={selectItem}
           onDoubleClick={openItem}>
           <div className={styles.rowIcon}>
-            <Icon src={Icons.FILE_SOLID} alt="File" size="small" />
+            <Icon src={Icons.FILE_SOLID} alt="File" size={Size.SMALL} />
           </div>
           <div className={styles.rowItem}>{item.name}</div>
           <div className={styles.rowItem}>{lastModified}</div>
@@ -77,7 +77,7 @@ function FileExplorer() {
       isResizable
       title={directoryName}
       leftIcons={
-        <Icon src={Icons.TRASH} size="small" alt="Delete" disabled={areLeftIconsDisabled} onClick={deleteItem} />
+        <Icon src={Icons.TRASH} size={Size.SMALL} alt="Delete" disabled={areLeftIconsDisabled} onClick={deleteItem} />
       }
       footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}
       footerRight={rightFooter}>

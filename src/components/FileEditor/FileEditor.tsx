@@ -4,7 +4,7 @@ import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
-import { AppNames } from 'models/enums';
+import { AppNames, Size } from 'models/enums';
 import React, { useEffect, useRef, useState } from 'react';
 import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
 import {
@@ -92,8 +92,8 @@ function FileEditor({ fileId }: FileEditorProps) {
       isResizable
       leftIcons={
         <FlexDiv className={styles.leftIcons}>
-          <Icon src={Icons.SAVE} alt="Save icon" size="small" onClick={onSaveClickHandler} />
-          <Icon src={Icons.TRASH} alt="Trash icon" size="small" onClick={onDeleteClickHandler} />
+          <Icon src={Icons.SAVE} alt="Save icon" size={Size.SMALL} onClick={onSaveClickHandler} />
+          <Icon src={Icons.TRASH} alt="Trash icon" size={Size.SMALL} onClick={onDeleteClickHandler} />
         </FlexDiv>
       }
       footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}

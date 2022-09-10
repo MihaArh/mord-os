@@ -4,6 +4,7 @@ import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import TextInput from 'components/TextInput';
 import { EMAIL_REGEX, Icons, Images, USER } from 'models/constants';
+import { Size } from 'models/enums';
 import React, { useState } from 'react';
 
 import styles from './Authentication.module.css';
@@ -75,7 +76,7 @@ function Authentication() {
             errorMessage={emailErrorMessage}
             hasError={!!emailErrorMessage || !!credentialsErrorMessage}
             required
-            leftIcon={<Icon size="small" src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
+            leftIcon={<Icon size={Size.SMALL} src={Icons.USER} alt="User Icon" className={styles.leftIcon} />}
             placeholder="Email"
           />
           <TextInput
@@ -84,10 +85,10 @@ function Authentication() {
             onBlur={validatePassword}
             errorMessage={passwordErrorMessage}
             hasError={!!passwordErrorMessage || !!credentialsErrorMessage}
-            leftIcon={<Icon size="small" src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
+            leftIcon={<Icon size={Size.SMALL} src={Icons.LOCK} alt="Lock Icon" className={styles.leftIcon} />}
             rightIcon={
               <Icon
-                size="small"
+                size={Size.SMALL}
                 src={hidePassword ? Icons.EYE : Icons.EYE_DISABLE}
                 onClick={onPasswordVisibilityClick}
                 alt="Hide Password"
@@ -107,7 +108,7 @@ function Authentication() {
               styles.circle,
             )}>
             <Icon
-              size="large"
+              size={Size.LARGE}
               src={isLoginSuccessful ? Icons.TICK : Icons.ARROW_RIGHT}
               alt="Right Arrow"
               onClick={onLoginIconClick}
