@@ -6,10 +6,12 @@ import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
 import React, { useState } from 'react';
+import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
 import { deleteFile, selectDirectoryName, selectDirectoryPath, selectFiles } from 'store/directorySlice';
 
 import styles from './FileExplorer.module.css';
 
+const APP_NAME = 'Files';
 function FileExplorer() {
   const [selectedFile, setSelectedFile] = useState<number | null>(null);
   const [areLeftIconsDisabled, setAreLeftIconsDisabled] = useState(true);
@@ -23,6 +25,15 @@ function FileExplorer() {
       dispatch(deleteFile(selectedFile));
     }
   }
+
+  function onCloseAppHandler() {
+    dispatch(closeApplication(APP_NAME));
+  }
+
+  function onInteractionHandler() {
+    dispatch(interactedWithApplication(APP_NAME));
+  }
+
   function renderItems() {
     return files.map(item => {
       function selectItem() {
@@ -54,6 +65,8 @@ function FileExplorer() {
 
   return (
     <AppWindow
+      onClose={onCloseAppHandler}
+      onInteraction={onInteractionHandler}
       isResizable
       title={directoryName}
       leftIcons={

@@ -5,11 +5,13 @@ import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
 import React, { useEffect, useRef, useState } from 'react';
+import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
 import { selectAvailableName, selectDirectoryPath, addFile, File, updateFile } from 'store/directorySlice';
 import getTimeAndDate from 'utils/date';
 
 import styles from './FileEditor.module.css';
 
+const APP_NAME = 'Notes';
 const FILENAME = 'New File';
 interface FileEditorProps {
   isNewFile?: boolean;
@@ -31,7 +33,12 @@ function FileEditor({ isNewFile, filename = FILENAME }: FileEditorProps) {
       setNewFilename(availableFilename);
     }
   }, [availableFilename, isNewFile, isSaved]);
-
+  function onCloseAppHandler() {
+    dispatch(closeApplication(APP_NAME));
+  }
+  function onInteractionHandler() {
+    dispatch(interactedWithApplication(APP_NAME));
+  }
   function onSaveClickHandler() {
     if (!isSaved) {
       const file: File = {
@@ -57,6 +64,8 @@ function FileEditor({ isNewFile, filename = FILENAME }: FileEditorProps) {
   function onDeleteClickHandler() {}
   return (
     <AppWindow
+      onClose={onCloseAppHandler}
+      onInteraction={onInteractionHandler}
       title={newFilename}
       isResizable
       leftIcons={

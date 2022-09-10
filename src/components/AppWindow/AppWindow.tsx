@@ -15,6 +15,7 @@ interface AppWindowProps {
   footerRight?: React.ReactNode;
   onClose?: () => void;
   onMinimize?: () => void;
+  onInteraction?: () => void;
 }
 function AppWindow({
   children,
@@ -25,6 +26,7 @@ function AppWindow({
   footerRight,
   isResizable = false,
   leftIcons,
+  onInteraction,
 }: AppWindowProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -62,6 +64,7 @@ function AppWindow({
   }, [isDragging]);
   return (
     <FlexDiv
+      onClick={onInteraction}
       ref={windowRef}
       className={classNames(styles.container, isResizable ? styles.resizable : '')}
       style={{
