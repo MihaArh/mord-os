@@ -8,7 +8,6 @@ import close from 'assets/icons/close.svg';
 import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import fileSolid from 'assets/icons/file-solid.svg';
-import folderSolid from 'assets/icons/folder-solid.svg';
 import folder from 'assets/icons/folder.svg';
 import image from 'assets/icons/image.svg';
 import lock from 'assets/icons/lock.svg';
@@ -42,7 +41,6 @@ export const Icons = {
   SAVE: save,
   TRASH: trash,
   FILE_SOLID: fileSolid,
-  FOLDER_SOLID: folderSolid,
   ARROW_UP: arrowUp,
   ARROW_DOWN: arrowDown,
   ARROW_LEFT: arrowLeft,
@@ -61,3 +59,12 @@ export const USER = {
   EMAIL: 'borgoth@mordos.com',
   PASSWORD: '12bindthem',
 };
+
+export enum AppNames {
+  NOTES = 'Notes',
+  FILES = 'Files',
+  BROWSER = 'Browser',
+  CAMERA = 'Camera',
+  GALLERY = 'Gallery',
+  NEWS = 'News',
+}

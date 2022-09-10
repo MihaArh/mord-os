@@ -8,7 +8,7 @@ import styles from './AppWindow.module.css';
 
 interface AppWindowProps {
   children: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   isResizable?: boolean;
   leftIcons?: React.ReactNode;
   footerLeft?: React.ReactNode;

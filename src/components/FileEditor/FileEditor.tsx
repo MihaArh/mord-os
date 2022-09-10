@@ -3,70 +3,80 @@ import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
-import { Icons } from 'models/constants';
+import { AppNames, Icons } from 'models/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
-import { selectAvailableName, selectDirectoryPath, addFile, File, updateFile } from 'store/directorySlice';
+import {
+  selectAvailableName,
+  selectDirectoryPath,
+  File,
+  selectFileById,
+  addFile,
+  updateFile,
+} from 'store/directorySlice';
 import getTimeAndDate from 'utils/date';
 
 import styles from './FileEditor.module.css';
 
-const APP_NAME = 'Notes';
 const FILENAME = 'New File';
 interface FileEditorProps {
-  isNewFile?: boolean;
-  filename?: string;
+  fileId?: number | null;
 }
-function FileEditor({ isNewFile, filename = FILENAME }: FileEditorProps) {
+function FileEditor({ fileId }: FileEditorProps) {
   const directoryPath = useAppSelector(selectDirectoryPath);
+  const selectFileByIdSelector = useAppSelector(selectFileById);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [lastChanged, setLastChanged] = useState(0);
-  const [newFilename, setNewFilename] = useState('');
-  const [isSaved, setIsSaved] = useState(false);
-  const dateAndTime = getTimeAndDate(lastChanged);
+  const [file, setFile] = useState<File>();
+  const [isCreated, setIsCreated] = useState(false);
+  const [savedSuccessfully, setSavedSuccessfully] = useState(false);
+  const dateAndTime = file ? getTimeAndDate(file?.updatedAt) : '';
   const dispatch = useAppDispatch();
-  const availableFilename = useAppSelector(selectAvailableName)(filename);
+  const availableFilenameSelector = useAppSelector(selectAvailableName);
 
   useEffect(() => {
-    if (isNewFile && !isSaved) {
-      setLastChanged(Date.now());
-      setNewFilename(availableFilename);
+    if (isCreated) return;
+    if (fileId) {
+      const foundFile = selectFileByIdSelector(fileId);
+      if (foundFile) {
+        setFile({ ...foundFile });
+        textAreaRef.current!.value = foundFile.content;
+      }
+    } else {
+      const newFilename = availableFilenameSelector(FILENAME);
+      setFile({ name: newFilename, content: '', createdAt: Date.now(), updatedAt: Date.now(), id: 0 });
     }
-  }, [availableFilename, isNewFile, isSaved]);
+  }, [availableFilenameSelector, fileId, isCreated, selectFileByIdSelector]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSavedSuccessfully(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [savedSuccessfully]);
   function onCloseAppHandler() {
-    dispatch(closeApplication(APP_NAME));
+    dispatch(closeApplication(AppNames.NOTES));
   }
   function onInteractionHandler() {
-    dispatch(interactedWithApplication(APP_NAME));
+    dispatch(interactedWithApplication(AppNames.NOTES));
   }
   function onSaveClickHandler() {
-    if (!isSaved) {
-      const file: File = {
-        name: newFilename,
-        content: textAreaRef.current!.value,
-        opened: true,
-        createdAt: lastChanged,
-        updatedAt: lastChanged,
-        id: 0,
-      };
+    if (!file) return;
+    file.content = textAreaRef.current!.value;
+    if (!fileId && !isCreated) {
       dispatch(addFile(file));
-      setIsSaved(true);
+      setIsCreated(true);
       return;
     }
-
-    const file: Partial<File> = {
-      name: newFilename,
-      content: textAreaRef.current!.value,
-      opened: true,
-    };
     dispatch(updateFile(file));
+    setSavedSuccessfully(true);
   }
   function onDeleteClickHandler() {}
   return (
     <AppWindow
       onClose={onCloseAppHandler}
       onInteraction={onInteractionHandler}
-      title={newFilename}
+      title={file?.name}
       isResizable
       leftIcons={
         <FlexDiv className={styles.leftIcons}>
@@ -78,6 +88,7 @@ function FileEditor({ isNewFile, filename = FILENAME }: FileEditorProps) {
       footerRight={<FlexDiv>Last Change: {dateAndTime}</FlexDiv>}>
       <FlexDiv className={styles.container}>
         <textarea className={styles.textArea} ref={textAreaRef} />
+        {savedSuccessfully && <FlexDiv className={styles.savedSuccessfully}>Saved Successfully</FlexDiv>}
       </FlexDiv>
     </AppWindow>
   );

@@ -10,11 +10,6 @@ import { selectOpenedApps } from 'store/applicationsSlice';
 
 import styles from './Desktop.module.css';
 
-const APP_COMPONENTS = {
-  Notes: <FileEditor />,
-  Files: <FileExplorer />,
-};
-
 function Desktop() {
   const oppenedApps = useAppSelector(selectOpenedApps);
   return (
@@ -27,7 +22,7 @@ function Desktop() {
           {oppenedApps.map(app => {
             switch (app.name) {
               case 'Notes':
-                return <FileEditor key={app.name} />;
+                return <FileEditor key={app.name} fileId={app.fileId} />;
               case 'Files':
                 return <FileExplorer key={app.name} />;
               default:

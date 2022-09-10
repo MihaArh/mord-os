@@ -4,14 +4,15 @@ import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
-import { Icons } from 'models/constants';
+import { AppNames, Icons } from 'models/constants';
 import React, { useState } from 'react';
-import { closeApplication, interactedWithApplication } from 'store/applicationsSlice';
+import { closeApplication, interactedWithApplication, openApplication } from 'store/applicationsSlice';
 import { deleteFile, selectDirectoryName, selectDirectoryPath, selectFiles } from 'store/directorySlice';
+import getTimeAndDate from 'utils/date';
 
 import styles from './FileExplorer.module.css';
 
-const APP_NAME = 'Files';
+const APP_NAME = AppNames.FILES;
 function FileExplorer() {
   const [selectedFile, setSelectedFile] = useState<number | null>(null);
   const [areLeftIconsDisabled, setAreLeftIconsDisabled] = useState(true);
@@ -20,6 +21,7 @@ function FileExplorer() {
   const directoryPath = useAppSelector(selectDirectoryPath);
   const dispatch = useAppDispatch();
   const rightFooter = `${files.length} ${files.length === 1 ? 'file' : 'files'}`;
+
   function deleteItem() {
     if (selectedFile !== null) {
       dispatch(deleteFile(selectedFile));
@@ -45,7 +47,11 @@ function FileExplorer() {
         setAreLeftIconsDisabled(false);
         setSelectedFile(item.id);
       }
-      function openItem() {}
+      function openItem() {
+        dispatch(openApplication({ name: AppNames.NOTES, id: item.id }));
+      }
+      const lastModified = getTimeAndDate(item.updatedAt);
+      const created = getTimeAndDate(item.createdAt);
       return (
         <FlexDiv
           key={item.id}
@@ -56,8 +62,8 @@ function FileExplorer() {
             <Icon src={Icons.FILE_SOLID} alt="File" size="small" />
           </div>
           <div className={styles.rowItem}>{item.name}</div>
-          <div className={styles.rowItem}>{item.updatedAt}</div>
-          <div className={styles.rowItem}>{item.createdAt}</div>
+          <div className={styles.rowItem}>{lastModified}</div>
+          <div className={styles.rowItem}>{created}</div>
         </FlexDiv>
       );
     });

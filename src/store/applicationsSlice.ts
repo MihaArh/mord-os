@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Icons } from 'models/constants';
+import { AppNames, Icons } from 'models/constants';
 
 import type { RootState } from './configureStore';
 
@@ -9,6 +9,7 @@ export interface App {
   tooltip: string;
   opened: boolean;
   lastInteracted: number;
+  fileId?: number | null;
 }
 export interface AppsState {
   apps: App[];
@@ -17,42 +18,43 @@ export interface AppsState {
 const initialState: AppsState = {
   apps: [
     {
-      name: 'Notes',
+      name: AppNames.NOTES,
       icon: Icons.NOTES,
       tooltip: 'New Note',
       opened: false,
       lastInteracted: 0,
     },
     {
-      name: 'Files',
+      name: AppNames.FILES,
       icon: Icons.FOLDER,
       tooltip: 'Files',
       opened: false,
       lastInteracted: 0,
+      fileId: null,
     },
     {
-      name: 'Browser',
+      name: AppNames.BROWSER,
       icon: Icons.BROWSER,
       tooltip: 'Browser',
       opened: false,
       lastInteracted: 0,
     },
     {
-      name: 'Camera',
+      name: AppNames.CAMERA,
       icon: Icons.CAMERA,
       tooltip: 'Camera',
       opened: false,
       lastInteracted: 0,
     },
     {
-      name: 'Gallery',
+      name: AppNames.GALLERY,
       icon: Icons.IMAGE,
       tooltip: 'Gallery',
       opened: false,
       lastInteracted: 0,
     },
     {
-      name: 'News',
+      name: AppNames.NEWS,
       icon: Icons.NEWS,
       tooltip: 'News',
       opened: false,
@@ -65,12 +67,16 @@ export const applicationsSlice = createSlice({
   name: 'applications',
   initialState,
   reducers: {
-    openApplication: (state, action: PayloadAction<string>) => {
-      const name = action.payload;
+    openApplication: (state, action: PayloadAction<{ name: string; id: number | null }>) => {
+      const { name, id } = action.payload;
+
       const foundApp = state.apps.find(app => app.name === name);
       if (foundApp) {
         foundApp.opened = true;
         foundApp.lastInteracted = new Date().getTime();
+        if (id !== null) {
+          foundApp.fileId = id;
+        }
       }
     },
     interactedWithApplication: (state, action: PayloadAction<string>) => {
@@ -85,6 +91,7 @@ export const applicationsSlice = createSlice({
       const foundApp = state.apps.find(app => app.name === name);
       if (foundApp) {
         foundApp.opened = false;
+        foundApp.fileId = null;
       }
     },
   },

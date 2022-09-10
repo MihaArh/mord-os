@@ -14,7 +14,7 @@ function Dock() {
   function renderDockIcons() {
     return apps.map(app => {
       function openApp() {
-        dispatch(openApplication(app.name));
+        dispatch(openApplication({ name: app.name, id: null }));
       }
       return (
         <FlexDiv className={styles.iconContainer} key={app.name}>

@@ -8,7 +8,6 @@ export interface File {
   createdAt: number;
   updatedAt: number;
   content: string;
-  opened: boolean;
 }
 export interface DirectoryState {
   name: string;
@@ -21,12 +20,11 @@ const initialState: DirectoryState = {
   path: 'MordOs\\Files',
   files: [
     {
-      id: 0,
+      id: 1,
       name: 'New File',
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
       content: '# MordOs',
-      opened: false,
     },
   ],
 };
@@ -50,7 +48,7 @@ export const directorySlice = createSlice({
       if (foundFile) {
         foundFile.content = action.payload.content || foundFile.content;
         foundFile.name = action.payload.name || foundFile.name;
-        foundFile.opened = action.payload.opened || foundFile.opened;
+        // foundFile.opened = action.payload.opened || foundFile.opened;
         foundFile.updatedAt = new Date().getTime();
       }
     },
@@ -66,6 +64,10 @@ export const selectFiles = createSelector([selectRootDirectory], directory => di
 export const selectFilesByName = createSelector(
   [selectFiles],
   directory => (name: string) => directory.filter(file => file.name === name),
+);
+export const selectFileById = createSelector(
+  [selectFiles],
+  directory => (id: number) => directory.find(file => file.id === id),
 );
 export const selectAvailableName = createSelector([selectFilesByName], files => (name: string) => {
   let count = 0;
