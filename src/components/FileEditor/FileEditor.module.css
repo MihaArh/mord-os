@@ -22,3 +22,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.titleInput {
+  all: unset;
+  width: fit-content;
+  cursor: text;
+  border-bottom: 1px solid var(--dark-gray);
+}

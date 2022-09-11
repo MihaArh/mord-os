@@ -30,6 +30,7 @@ function FileEditor({ fileId }: FileEditorProps) {
   const selectFileByIdSelector = useAppSelector(selectFileById);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [file, setFile] = useState<File>();
+  const [filename, setFilename] = useState('');
   const [isCreated, setIsCreated] = useState(false);
   const [savedSuccessfully, setSavedSuccessfully] = useState(false);
   const dateAndTime = file ? getTimeAndDate(file?.updatedAt) : '';
@@ -39,6 +40,7 @@ function FileEditor({ fileId }: FileEditorProps) {
 
   useEffect(() => {
     if (isCreated) return;
+    let newFilename = '';
     if (fileId) {
       const foundFile = selectFileByIdSelector(fileId);
       if (foundFile) {
@@ -46,11 +48,12 @@ function FileEditor({ fileId }: FileEditorProps) {
         textAreaRef.current!.value = foundFile.content;
       }
     } else {
-      const newFilename = availableFilenameSelector(FILENAME);
+      newFilename = availableFilenameSelector(FILENAME);
       const newId = availableIdSelector;
       setFile({ name: newFilename, content: '', createdAt: Date.now(), updatedAt: Date.now(), id: newId });
     }
-  }, [availableFilenameSelector, availableIdSelector, fileId, isCreated, selectFileByIdSelector]);
+    setFilename(file?.name || newFilename);
+  }, [availableFilenameSelector, availableIdSelector, file?.name, fileId, isCreated, selectFileByIdSelector]);
   useEffect(() => {
     const timer = setTimeout(() => {
       setSavedSuccessfully(false);
@@ -69,7 +72,10 @@ function FileEditor({ fileId }: FileEditorProps) {
     if (!file) return;
 
     const copyFile = { ...file };
+
+    copyFile.name = copyFile.name !== filename ? filename : copyFile.name;
     copyFile.content = textAreaRef.current!.value;
+
     if (!fileId && !isCreated) {
       dispatch(addFile(copyFile));
       setIsCreated(true);
@@ -84,11 +90,30 @@ function FileEditor({ fileId }: FileEditorProps) {
     dispatch(deleteFile(file.id));
     dispatch(closeApplication(AppNames.NOTES));
   }
+  function onTitleInputChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setFilename(event.target.value);
+  }
+  function onTitleBlurHandler() {
+    if (file!.name === filename) return;
+    const newFilename = availableFilenameSelector(filename);
+    if (newFilename !== filename) {
+      setFilename(newFilename);
+    }
+  }
   return (
     <AppWindow
       onClose={onCloseAppHandler}
       onInteraction={onInteractionHandler}
-      title={file?.name}
+      // title={file?.name }
+      title={
+        <input
+          placeholder="Insert file name"
+          value={filename}
+          onChange={onTitleInputChangeHandler}
+          onBlur={onTitleBlurHandler}
+          className={styles.titleInput}
+        />
+      }
       isResizable
       leftIcons={
         <FlexDiv className={styles.leftIcons}>

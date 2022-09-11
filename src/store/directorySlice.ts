@@ -60,7 +60,7 @@ export const directorySlice = createSlice({
       state.files.push(action.payload);
     },
     updateFile: (state, action: PayloadAction<Partial<File>>) => {
-      const foundFile = state.files.find(file => file.name === action.payload.name);
+      const foundFile = state.files.find(file => file.id === action.payload.id);
       if (foundFile) {
         foundFile.content = action.payload.content || foundFile.content;
         foundFile.name = action.payload.name || foundFile.name;
