@@ -27,7 +27,7 @@ function Desktop() {
   return (
     <DesktopBackground>
       <FlexDiv className={styles.container}>
-        <FlexDiv className={styles.menuBarContainer}>
+        <FlexDiv>
           <MenuBar />
         </FlexDiv>
 
