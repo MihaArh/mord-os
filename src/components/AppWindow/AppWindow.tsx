@@ -80,7 +80,7 @@ function AppWindow({
         </FlexDiv>
       </FlexDiv>
 
-      <div className={styles.divider} />
+      <div className="divider" />
       <FlexDiv className={styles.content}>{children}</FlexDiv>
       {(footerLeft || footerRight) && (
         <>
