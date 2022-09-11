@@ -67,12 +67,12 @@ export const directorySlice = createSlice({
         foundFile.updatedAt = new Date().getTime();
       }
     },
-    updateSortBy: (state, action: PayloadAction<{ name: string; sortDesc: boolean }>) => {
-      const { name, sortDesc } = action.payload;
+    updateSortBy: (state, action: PayloadAction<SortableField>) => {
+      const { name } = action.payload;
       state.sortableFields.forEach(field => {
         if (field.name === name) {
           field.selected = true;
-          field.sortDesc = !sortDesc;
+          field.sortDesc = !field.sortDesc;
         } else {
           field.selected = false;
         }
