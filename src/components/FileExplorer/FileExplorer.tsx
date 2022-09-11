@@ -8,7 +8,15 @@ import { Icons } from 'models/constants';
 import { AppNames, Size } from 'models/enums';
 import React, { useState } from 'react';
 import { closeApplication, interactedWithApplication, openApplication } from 'store/applicationsSlice';
-import { deleteFile, selectDirectoryName, selectDirectoryPath, selectFiles } from 'store/directorySlice';
+import {
+  deleteFile,
+  selectDirectoryName,
+  selectDirectoryPath,
+  selectFiles,
+  selectSortableFields,
+  selectSortedFiles,
+  updateSortBy,
+} from 'store/directorySlice';
 import getTimeAndDate from 'utils/date';
 
 import styles from './FileExplorer.module.css';
@@ -18,8 +26,10 @@ function FileExplorer() {
   const [selectedFile, setSelectedFile] = useState<number | null>(null);
   const [areLeftIconsDisabled, setAreLeftIconsDisabled] = useState(true);
   const files = useAppSelector(selectFiles);
+  const sortedFiles = useAppSelector(selectSortedFiles);
   const directoryName = useAppSelector(selectDirectoryName);
   const directoryPath = useAppSelector(selectDirectoryPath);
+  const sortableFieldsSelector = useAppSelector(selectSortableFields);
   const dispatch = useAppDispatch();
   const rightFooter = `${files.length} ${files.length === 1 ? 'file' : 'files'}`;
 
@@ -38,7 +48,7 @@ function FileExplorer() {
   }
 
   function renderItems() {
-    return files.map(item => {
+    return sortedFiles.map(item => {
       function selectItem() {
         if (item.id === selectedFile) {
           setSelectedFile(null);
@@ -56,7 +66,7 @@ function FileExplorer() {
       return (
         <FlexDiv
           key={item.id}
-          className={classNames(styles.row, item.id === selectedFile ? styles.selected : '')}
+          className={classNames(styles.row, item.id === selectedFile ? styles.selected : '', 'notSelectable')}
           onClick={selectItem}
           onDoubleClick={openItem}>
           <div className={styles.rowIcon}>
@@ -83,9 +93,19 @@ function FileExplorer() {
       footerRight={rightFooter}>
       <FlexDiv className={styles.table}>
         <FlexDiv className={styles.header}>
-          <div className={styles.rowItem}>Name</div>
-          <div className={styles.rowItem}>Last Modified</div>
-          <div className={styles.rowItem}>Created</div>
+          {sortableFieldsSelector.map(field => {
+            function sortFiles() {
+              dispatch(updateSortBy(field));
+            }
+            return (
+              <FlexDiv key={field.name} className={classNames(styles.rowItem, 'notSelectable')} onClick={sortFiles}>
+                <div>{field.name}</div>
+                {field.selected && (
+                  <Icon src={field.sortDesc ? Icons.ARROW_UP : Icons.ARROW_DOWN} alt="Sort Icon" size={Size.SMALL} />
+                )}
+              </FlexDiv>
+            );
+          })}
         </FlexDiv>
         <div className="divider" />
         <FlexDiv className={styles.body}>{renderItems()}</FlexDiv>

@@ -11,3 +11,9 @@ export enum Size {
   SMALL = 'small',
   LARGE = 'large',
 }
+
+export enum SortableFields {
+  NAME = 'Name',
+  LAST_MODIFIED = 'Last Modified',
+  CREATED = 'Created',
+}
