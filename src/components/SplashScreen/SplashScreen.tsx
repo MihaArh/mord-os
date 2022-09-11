@@ -1,16 +1,17 @@
 import Logo from 'assets/images/Logo.png';
 import classNames from 'classnames';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './SplashScreen.module.css';
 
-interface SplashScreenProps {
-  onComplete: () => void;
-}
-
-function SplashScreen({ onComplete }: SplashScreenProps) {
+function SplashScreen() {
+  const navigate = useNavigate();
+  function onAnimationEnd() {
+    navigate('/login');
+  }
   return (
-    <div className={classNames(styles.container, styles.appear)} onAnimationEnd={onComplete}>
+    <div className={classNames(styles.container, styles.appear)} onAnimationEnd={onAnimationEnd}>
       <img src={Logo} alt="MordOS Logo" className={styles.img} />
     </div>
   );

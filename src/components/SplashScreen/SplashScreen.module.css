@@ -13,14 +13,17 @@
 }
 
 .appear {
-  animation: appearAnimation 2s ease-in;
+  animation: appearAnimation 4s ease-in;
 }
 
 @keyframes appearAnimation {
   0% {
     opacity: 0;
   }
-  100% {
+  50% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
