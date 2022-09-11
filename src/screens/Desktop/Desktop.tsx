@@ -11,7 +11,7 @@ import { selectOpenedApps } from 'store/applicationsSlice';
 import styles from './Desktop.module.css';
 
 function Desktop() {
-  const oppenedApps = useAppSelector(selectOpenedApps);
+  const openedApps = useAppSelector(selectOpenedApps);
   return (
     <DesktopBackground>
       <FlexDiv className={styles.container}>
@@ -19,7 +19,7 @@ function Desktop() {
           <MenuBar />
         </FlexDiv>
         <FlexDiv className={styles.contentContainer}>
-          {oppenedApps.map(app => {
+          {openedApps.map(app => {
             switch (app.name) {
               case 'Notes':
                 return <FileEditor key={app.name} fileId={app.fileId} />;
