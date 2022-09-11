@@ -1,3 +1,4 @@
+import Camera from 'components/Camera';
 import DesktopBackground from 'components/DesktopBackground';
 import Dock from 'components/Dock';
 import FileEditor from 'components/FileEditor';
@@ -39,6 +40,8 @@ function Desktop() {
                 return <FileExplorer key={app.name} />;
               case AppNames.BROWSER:
                 return <WebBrowser key={app.name} />;
+              case AppNames.CAMERA:
+                return <Camera key={app.name} />;
               default:
                 return null;
             }
