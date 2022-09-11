@@ -7,7 +7,7 @@ import FlexDiv from 'components/FlexDiv';
 import MenuBar from 'components/MenuBar';
 import WebBrowser from 'components/WebBrowser';
 import useAppSelector from 'hooks/useAppSelector';
-import { AppNames } from 'models/enums';
+import { AppNames, Routes } from 'models/enums';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selectOpenedApps } from 'store/applicationsSlice';
@@ -21,7 +21,7 @@ function Desktop() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/');
+      navigate(Routes.SPLASH_SCREEN);
     }
   });
   return (

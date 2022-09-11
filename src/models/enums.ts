@@ -17,3 +17,9 @@ export enum SortableFields {
   LAST_MODIFIED = 'Last Modified',
   CREATED = 'Created',
 }
+
+export enum Routes {
+  SPLASH_SCREEN = '/',
+  LOGIN = '/login',
+  DESKTOP = '/desktop',
+}

@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import TextInput from 'components/TextInput';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { EMAIL_REGEX, Icons, Images } from 'models/constants';
-import { Size } from 'models/enums';
+import { Routes, Size } from 'models/enums';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from 'store/userSlice';
@@ -66,7 +66,7 @@ function Authentication() {
     }
     dispatch(login({ email, password }));
     setIsLoginSuccessful(true);
-    navigate('/desktop');
+    navigate(Routes.DESKTOP);
   }
   return (
     <DesktopBackground blurred>
