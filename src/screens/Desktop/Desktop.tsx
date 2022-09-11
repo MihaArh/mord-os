@@ -4,7 +4,9 @@ import FileEditor from 'components/FileEditor';
 import FileExplorer from 'components/FileExplorer';
 import FlexDiv from 'components/FlexDiv';
 import MenuBar from 'components/MenuBar';
+import WebBrowser from 'components/WebBrowser';
 import useAppSelector from 'hooks/useAppSelector';
+import { AppNames } from 'models/enums';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selectOpenedApps } from 'store/applicationsSlice';
@@ -31,10 +33,12 @@ function Desktop() {
         <FlexDiv className={styles.contentContainer}>
           {openedApps.map(app => {
             switch (app.name) {
-              case 'Notes':
+              case AppNames.NOTES:
                 return <FileEditor key={app.name} fileId={app.fileId} />;
-              case 'Files':
+              case AppNames.FILES:
                 return <FileExplorer key={app.name} />;
+              case AppNames.BROWSER:
+                return <WebBrowser key={app.name} />;
               default:
                 return null;
             }

@@ -9,6 +9,7 @@ import eyeDisable from 'assets/icons/eye-disable.svg';
 import eyeIcon from 'assets/icons/eye.svg';
 import fileSolid from 'assets/icons/file-solid.svg';
 import folder from 'assets/icons/folder.svg';
+import google from 'assets/icons/google.svg';
 import image from 'assets/icons/image.svg';
 import lock from 'assets/icons/lock.svg';
 import logo from 'assets/icons/logo.svg';
@@ -45,6 +46,7 @@ export const Icons = {
   ARROW_DOWN: arrowDown,
   ARROW_LEFT: arrowLeft,
   PENCIL: pencil,
+  GOOGLE: google,
 };
 
 export const Images = {
