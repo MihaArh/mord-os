@@ -104,7 +104,6 @@ function FileEditor({ fileId }: FileEditorProps) {
     <AppWindow
       onClose={onCloseAppHandler}
       onInteraction={onInteractionHandler}
-      // title={file?.name }
       title={
         <input
           placeholder="Insert file name"
