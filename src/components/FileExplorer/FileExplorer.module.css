@@ -1,3 +1,8 @@
+.row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .row:hover {
   background-color: var(--dark-gray);
 }
@@ -16,11 +21,7 @@
   min-height: 30px;
   padding: auto;
 }
-.row {
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
+
 .rowItem {
   flex: 1;
   flex-direction: row;
