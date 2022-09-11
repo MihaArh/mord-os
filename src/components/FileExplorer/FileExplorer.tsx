@@ -38,7 +38,6 @@ function FileExplorer() {
   function onDeleteClickHandler() {
     if (!selectedFile) return;
     setIsConfirmOpen(true);
-    console.log('delete', isConfirmOpen);
   }
   function closeConfirm() {
     setIsConfirmOpen(false);
