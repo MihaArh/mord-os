@@ -7,12 +7,14 @@ import useAppDispatch from 'hooks/useAppDispatch';
 import { EMAIL_REGEX, Icons, Images } from 'models/constants';
 import { Size } from 'models/enums';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { login } from 'store/userSlice';
 
 import styles from './Authentication.module.css';
 
 function Authentication() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [password, setPassword] = useState('');
@@ -64,6 +66,7 @@ function Authentication() {
     }
     dispatch(login({ email, password }));
     setIsLoginSuccessful(true);
+    navigate('/desktop');
   }
   return (
     <DesktopBackground blurred>
