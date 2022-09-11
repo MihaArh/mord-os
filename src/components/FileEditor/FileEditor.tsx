@@ -1,6 +1,8 @@
 import AppWindow from 'components/AppWindow';
+import Confirm from 'components/Confirm';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
+import PopUp from 'components/PopUp';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
@@ -37,7 +39,7 @@ function FileEditor({ fileId }: FileEditorProps) {
   const dispatch = useAppDispatch();
   const availableFilenameSelector = useAppSelector(selectAvailableName);
   const availableIdSelector = useAppSelector(selectAvailableId);
-
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   useEffect(() => {
     if (isCreated) return;
     let newFilename = '';
@@ -85,7 +87,14 @@ function FileEditor({ fileId }: FileEditorProps) {
 
     setSavedSuccessfully(true);
   }
+  function closeConfirm() {
+    setIsConfirmOpen(false);
+  }
   function onDeleteClickHandler() {
+    if (!file) return;
+    setIsConfirmOpen(true);
+  }
+  function deleteItem() {
     if (!file) return;
     dispatch(deleteFile(file.id));
     dispatch(closeApplication(AppNames.NOTES));
@@ -122,6 +131,16 @@ function FileEditor({ fileId }: FileEditorProps) {
       }
       footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}
       footerRight={<FlexDiv>Last Change: {dateAndTime}</FlexDiv>}>
+      {isConfirmOpen && (
+        <PopUp isOpen={isConfirmOpen}>
+          <Confirm
+            title="Delete file"
+            content="Are you sure you want to delete this file?"
+            onConfirm={deleteItem}
+            onCancel={closeConfirm}
+          />
+        </PopUp>
+      )}
       <FlexDiv className={styles.container}>
         <textarea className={styles.textArea} ref={textAreaRef} />
         {savedSuccessfully && <FlexDiv className={styles.savedSuccessfully}>Saved Successfully</FlexDiv>}

@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import AppWindow from 'components/AppWindow';
+import Confirm from 'components/Confirm';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
+import PopUp from 'components/PopUp';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { Icons } from 'models/constants';
@@ -32,11 +34,19 @@ function FileExplorer() {
   const sortableFieldsSelector = useAppSelector(selectSortableFields);
   const dispatch = useAppDispatch();
   const rightFooter = `${files.length} ${files.length === 1 ? 'file' : 'files'}`;
-
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  function onDeleteClickHandler() {
+    if (!selectedFile) return;
+    setIsConfirmOpen(true);
+    console.log('delete', isConfirmOpen);
+  }
+  function closeConfirm() {
+    setIsConfirmOpen(false);
+  }
   function deleteItem() {
-    if (selectedFile !== null) {
-      dispatch(deleteFile(selectedFile));
-    }
+    if (!selectedFile) return;
+    dispatch(deleteFile(selectedFile));
+    setIsConfirmOpen(false);
   }
 
   function onCloseAppHandler() {
@@ -87,10 +97,26 @@ function FileExplorer() {
       isResizable
       title={directoryName}
       leftIcons={
-        <Icon src={Icons.TRASH} size={Size.SMALL} alt="Delete" disabled={areLeftIconsDisabled} onClick={deleteItem} />
+        <Icon
+          src={Icons.TRASH}
+          size={Size.SMALL}
+          alt="Delete"
+          disabled={areLeftIconsDisabled}
+          onClick={onDeleteClickHandler}
+        />
       }
       footerLeft={<FlexDiv>{directoryPath}</FlexDiv>}
       footerRight={rightFooter}>
+      {isConfirmOpen && (
+        <PopUp isOpen={isConfirmOpen}>
+          <Confirm
+            title="Delete file"
+            content="Are you sure you want to delete this file?"
+            onConfirm={deleteItem}
+            onCancel={closeConfirm}
+          />
+        </PopUp>
+      )}
       <FlexDiv className={styles.table}>
         <FlexDiv className={styles.header}>
           {sortableFieldsSelector.map(field => {

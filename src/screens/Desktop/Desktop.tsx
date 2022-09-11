@@ -27,6 +27,7 @@ function Desktop() {
         <FlexDiv className={styles.menuBarContainer}>
           <MenuBar />
         </FlexDiv>
+
         <FlexDiv className={styles.contentContainer}>
           {openedApps.map(app => {
             switch (app.name) {

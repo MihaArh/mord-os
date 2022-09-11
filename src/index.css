@@ -19,3 +19,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+#pop-up-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
