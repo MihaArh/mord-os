@@ -52,7 +52,7 @@ function TextInput({
       {leftIcon && (
         <>
           <div className={styles.leftIcon}>{leftIcon}</div>
-          <div className="divider" />
+          <div className={styles.divider} />
         </>
       )}
       <div className={styles.inputDiv}>
