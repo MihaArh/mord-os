@@ -1,9 +1,11 @@
 import AppWindow from 'components/AppWindow';
 import FlexDiv from 'components/FlexDiv';
 import Icon from 'components/Icon';
+import useAppDispatch from 'hooks/useAppDispatch';
 import { Icons } from 'models/constants';
 import { AppNames, Size } from 'models/enums';
 import React, { useEffect, useRef } from 'react';
+import { closeApplication } from 'store/applicationsSlice';
 
 import styles from './Camera.module.css';
 
@@ -13,6 +15,7 @@ const EXPECTED_VIDEO_HEIGHT = 480;
 function Camera() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -48,8 +51,12 @@ function Camera() {
     }
   }
 
+  function onCloseAppHandler() {
+    dispatch(closeApplication(AppNames.CAMERA));
+  }
+
   return (
-    <AppWindow title={APP_NAME}>
+    <AppWindow title={APP_NAME} onClose={onCloseAppHandler}>
       <FlexDiv className={styles.container}>
         <video className={styles.video} ref={videoRef}>
           <track kind="captions" />
