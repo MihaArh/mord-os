@@ -14,7 +14,7 @@ const initialState: UserState = {
   user: {
     email: '',
     password: '',
-    loggedIn: true,
+    loggedIn: false,
   },
 };
 
